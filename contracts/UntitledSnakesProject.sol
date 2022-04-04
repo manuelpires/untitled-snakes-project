@@ -39,7 +39,7 @@ contract UntitledSnakesProject is ERC721, Ownable {
     /// Price to mint one token.
     uint256 public price;
 
-    /// Profits for the UBIBurner contract.
+    /// Profits accumulated for the UBIBurner contract.
     uint256 public profitsForUBIBurner;
 
     /// Counter that keeps track of minted tokens.
@@ -94,7 +94,7 @@ contract UntitledSnakesProject is ERC721, Ownable {
             "Ether value sent is not enough"
         );
 
-        // Mint tokens.
+        // Mint tokens and hold their ids on memory.
         uint256[] memory tokenIds = _mintMultiple(msg.sender, _quantity);
 
         // Verify if caller is registered on PoH.
