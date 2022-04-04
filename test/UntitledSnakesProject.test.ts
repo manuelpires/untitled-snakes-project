@@ -7,7 +7,7 @@ import {
   MockContract,
 } from "@ethereum-waffle/mock-contract";
 import IProofOfHumanity from "../artifacts/contracts/IProofOfHumanity.sol/IProofOfHumanity.json";
-import UBIBurner from "./artifacts/UBIBurner.json";
+import UBIBurner from "./mock/UBIBurner.json";
 
 const {
   BigNumber,
