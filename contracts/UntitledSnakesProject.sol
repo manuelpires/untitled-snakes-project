@@ -9,7 +9,7 @@ import "./IProofOfHumanity.sol";
  * @title UntitledSnakesProject contract.
  * @notice An NFT collection of 6666 Snakes slithering on the Ethereum Blockchain.
  * All profits from mints by addresses registered on Proof Of Humanity are transferred
- * to the UBIBurner contract, which buys UBI tokens and then burns them.
+ * to the UBIBurner contract, which buys UBI tokens and leaves them trapped inside of it.
  * @dev Extends OpenZeppelin's implementation of the ERC-721 Non-Fungible Token Standard.
  */
 contract UntitledSnakesProject is ERC721, Ownable {
