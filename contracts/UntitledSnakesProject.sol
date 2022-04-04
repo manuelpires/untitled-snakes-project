@@ -45,7 +45,11 @@ contract UntitledSnakesProject is ERC721, Ownable {
     /// Counter that keeps track of minted tokens.
     uint256 private _tokenCounter;
 
-    /// Emitted when the mint of one or more tokens accumulate profits for the UBIBurner.
+    /**
+     * Emitted every time a {mint} call accumulates profits for the UBIBurner contract.
+     * @param human Address of the human who minted.
+     * @param tokenIds Ids list of the tokens minted.
+     */
     event HumanityLover(address human, uint256[] tokenIds);
 
     /**
@@ -194,7 +198,8 @@ contract UntitledSnakesProject is ERC721, Ownable {
     }
 
     /**
-     * Toggle the sale status: inactive --> active, and vice versa.
+     * Toggle the sale status.
+     * @dev Inactive --> active, and vice versa.
      */
     function toggleSaleStatus() public onlyOwner {
         isSaleActive = !isSaleActive;
@@ -222,7 +227,7 @@ contract UntitledSnakesProject is ERC721, Ownable {
      * @dev Updates the token counter after all tokens are minted.
      * @param _to Address that will receive the tokens.
      * @param _quantity Number of tokens to mint.
-     * @return Array of tokenIds minted.
+     * @return Ids list of the tokens minted.
      */
     function _mintMultiple(address _to, uint256 _quantity)
         private
