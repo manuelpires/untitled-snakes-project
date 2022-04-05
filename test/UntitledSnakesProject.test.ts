@@ -300,9 +300,19 @@ describe("UntitledSnakesProject contract", function () {
       const tx2 = contract.mint(2, { value: price.mul(2).sub(1) });
       const tx3 = contract.mint(1);
 
-      await expect(tx1).to.be.revertedWith("Ether value sent is not enough");
-      await expect(tx2).to.be.revertedWith("Ether value sent is not enough");
-      await expect(tx3).to.be.revertedWith("Ether value sent is not enough");
+      await expect(tx1).to.be.revertedWith("Ether value sent is incorrect");
+      await expect(tx2).to.be.revertedWith("Ether value sent is incorrect");
+      await expect(tx3).to.be.revertedWith("Ether value sent is incorrect");
+    });
+
+    it("Should revert mint call if ether value sent exceeds the needed for the minting", async function () {
+      await contract.toggleSaleStatus();
+
+      const tx1 = contract.mint(1, { value: price.add(1) });
+      const tx2 = contract.mint(2, { value: price.mul(2).add(1) });
+
+      await expect(tx1).to.be.revertedWith("Ether value sent is incorrect");
+      await expect(tx2).to.be.revertedWith("Ether value sent is incorrect");
     });
   });
 

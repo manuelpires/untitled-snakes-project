@@ -92,10 +92,10 @@ contract UntitledSnakesProject is ERC721, Ownable {
             "Invalid mint quantity"
         );
 
-        // Check if ether sent is equal or more than the price of one token * requested quantity.
+        // Check if ether value sent is equal to the price of one token * requested quantity.
         require(
-            msg.value >= price * _quantity,
-            "Ether value sent is not enough"
+            msg.value == price * _quantity,
+            "Ether value sent is incorrect"
         );
 
         // Mint tokens and hold their ids on memory.
