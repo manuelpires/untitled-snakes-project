@@ -322,7 +322,7 @@ describe("UntitledSnakesProject contract", function () {
    */
   describe("Team Mint", function () {
     it("Should mint tokens for the team successfully", async function () {
-      await contract.teamMint(10);
+      await contract.teamMint();
 
       expect(await contract.balanceOf(owner.address)).to.equal(
         BigNumber.from(10)
@@ -330,15 +330,15 @@ describe("UntitledSnakesProject contract", function () {
     });
 
     it("Should revert teamMint call if caller is not the owner", async function () {
-      const tx = contract.connect(addr1).teamMint(10);
+      const tx = contract.connect(addr1).teamMint();
 
       await expect(tx).to.be.revertedWith("Ownable: caller is not the owner");
     });
 
     it("Should revert teamMint call if it was already called before", async function () {
-      await contract.teamMint(1);
+      await contract.teamMint();
 
-      const tx = contract.teamMint(10);
+      const tx = contract.teamMint();
 
       await expect(tx).to.be.revertedWith("Cannot be called anymore");
     });
@@ -350,21 +350,9 @@ describe("UntitledSnakesProject contract", function () {
         value: price.mul(10),
       });
 
-      const tx = contract.teamMint(1);
+      const tx = contract.teamMint();
 
       await expect(tx).to.be.revertedWith("Cannot be called anymore");
-    });
-
-    it("Should revert teamMint call if number of tokens to mint is set to zero", async function () {
-      const tx = contract.teamMint(0);
-
-      await expect(tx).to.be.revertedWith("Invalid mint quantity");
-    });
-
-    it("Should revert teamMint call if number of tokens to mint is bigger than 10", async function () {
-      const tx = contract.teamMint(11);
-
-      await expect(tx).to.be.revertedWith("Invalid mint quantity");
     });
   });
 

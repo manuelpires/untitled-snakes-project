@@ -116,20 +116,13 @@ contract UntitledSnakesProject is ERC721, Ownable {
     /**
      * Mint tokens for the team.
      * @dev Requires that no tokens have been minted yet, so it can only be called once.
-     * @param _quantity Number of tokens to be minted.
      */
-    function teamMint(uint256 _quantity) external onlyOwner {
+    function teamMint() external onlyOwner {
         // Check that there are no minted tokens yet.
         require(totalSupply() == 0, "Cannot be called anymore");
 
-        // Check if mint quantity is bigger than zero and doesn't exceed the maximum permitted.
-        require(
-            _quantity > 0 && _quantity <= MAX_MINT_PER_TX,
-            "Invalid mint quantity"
-        );
-
         // Mint tokens.
-        _mintMultiple(msg.sender, _quantity);
+        _mintMultiple(msg.sender, MAX_MINT_PER_TX);
     }
 
     /**
