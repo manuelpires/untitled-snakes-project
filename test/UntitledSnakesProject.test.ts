@@ -266,7 +266,7 @@ describe("UntitledSnakesProject contract", function () {
 
       const tx = contract.mint(0);
 
-      await expect(tx).to.be.revertedWith("Invalid mint quantity");
+      await expect(tx).to.be.revertedWith("Invalid mint amount");
     });
 
     it("Should revert mint call if number of tokens to mint is bigger than 10", async function () {
@@ -274,7 +274,7 @@ describe("UntitledSnakesProject contract", function () {
 
       const tx = contract.mint(11, { value: price.mul(11) });
 
-      await expect(tx).to.be.revertedWith("Invalid mint quantity");
+      await expect(tx).to.be.revertedWith("Invalid mint amount");
     });
 
     it("Should revert mint call if purchase would exceed max supply", async function () {

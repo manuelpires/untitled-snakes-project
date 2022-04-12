@@ -74,32 +74,29 @@ contract UntitledSnakesProject is ERC721, Ownable {
     /**
      * Mint tokens and transfer them to the caller.
      * @dev If caller is registered on PoH, accumulate ether value for the UBIBurner contract.
-     * @param _quantity Number of tokens to be minted.
+     * @param _amount Number of tokens to be minted.
      */
-    function mint(uint256 _quantity) external payable {
+    function mint(uint256 _amount) external payable {
         // Check if sale is active.
         require(isSaleActive, "Sale is not active");
 
         // Check if minting wouldn't exceed maximum supply of tokens.
         require(
-            totalSupply() + _quantity <= MAX_SUPPLY,
+            totalSupply() + _amount <= MAX_SUPPLY,
             "Would exceed max supply"
         );
 
-        // Check if mint quantity is bigger than zero and doesn't exceed the maximum permitted.
+        // Check if mint amount is bigger than zero and doesn't exceed the maximum permitted.
         require(
-            _quantity > 0 && _quantity <= MAX_MINT_PER_TX,
-            "Invalid mint quantity"
+            _amount > 0 && _amount <= MAX_MINT_PER_TX,
+            "Invalid mint amount"
         );
 
-        // Check if ether value sent is equal to the price of one token * requested quantity.
-        require(
-            msg.value == price * _quantity,
-            "Ether value sent is incorrect"
-        );
+        // Check if ether value sent is equal to the price of one token * requested amount.
+        require(msg.value == price * _amount, "Ether value sent is incorrect");
 
         // Mint tokens and hold their ids on memory.
-        uint256[] memory tokenIds = _mintMultiple(msg.sender, _quantity);
+        uint256[] memory tokenIds = _mintMultiple(msg.sender, _amount);
 
         // Verify if caller is registered on PoH.
         bool isVerifiedHuman = IProofOfHumanity(POH).isRegistered(msg.sender);
@@ -219,24 +216,24 @@ contract UntitledSnakesProject is ERC721, Ownable {
      * Mint multiple tokens for `_to`.
      * @dev Updates the token counter after all tokens are minted.
      * @param _to Address that will receive the tokens.
-     * @param _quantity Number of tokens to mint.
+     * @param _amount Number of tokens to mint.
      * @return Ids list of the tokens minted.
      */
-    function _mintMultiple(address _to, uint256 _quantity)
+    function _mintMultiple(address _to, uint256 _amount)
         private
         returns (uint256[] memory)
     {
         // Fixed-size array to store minted tokenIds.
-        uint256[] memory tokenIds = new uint256[](_quantity);
+        uint256[] memory tokenIds = new uint256[](_amount);
 
         // Mint each requested token.
-        for (uint256 i; i < _quantity; i++) {
+        for (uint256 i; i < _amount; i++) {
             tokenIds[i] = _tokenCounter + i;
             _safeMint(_to, tokenIds[i]);
         }
 
         // Update token counter.
-        _tokenCounter += _quantity;
+        _tokenCounter += _amount;
 
         return tokenIds;
     }
